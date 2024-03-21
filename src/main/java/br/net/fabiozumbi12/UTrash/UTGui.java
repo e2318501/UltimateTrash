@@ -186,18 +186,24 @@ public class UTGui implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     void onInventoryClick(InventoryClickEvent e){
-        if (e.getWhoClicked().equals(this.p) && e.getClickedInventory() != null && e.getClickedInventory().equals(this.inv)){
-            if (e.getRawSlot() == 0){
-                e.setCancelled(true);
-                e.getClickedInventory().setContents(items);
-                ((Player)e.getWhoClicked()).updateInventory();
-                UTrash.instance().tempTrash.remove(this.p.getName());
+        if (e.getWhoClicked().equals(this.p)){
+            if (e.getClickedInventory() != null && e.getClickedInventory().equals(this.inv)) {
+                if (e.getRawSlot() == 0) {
+                    e.setCancelled(true);
+                    e.getClickedInventory().setContents(items);
+                    ((Player) e.getWhoClicked()).updateInventory();
+                    UTrash.instance().tempTrash.remove(this.p.getName());
+                }
+                if (e.getRawSlot() == 8) {
+                    e.setCancelled(true);
+                    Close();
+                }
+                if (e.getRawSlot() > 0 && e.getRawSlot() < 8) {
+                    e.setCancelled(true);
+                }
             }
-            if (e.getRawSlot() == 8){
-                e.setCancelled(true);
-                Close();
-            }
-            if (e.getRawSlot() > 0 && e.getRawSlot() < 8 ){
+        } else if (e.getView().getTopInventory().equals(this.inv)) {
+            if (e.getCurrentItem() != null && UTrash.instance().getItemChecker().isSpecialItem(e.getCurrentItem())) {
                 e.setCancelled(true);
             }
         }

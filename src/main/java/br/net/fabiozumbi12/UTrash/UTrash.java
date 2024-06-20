@@ -15,7 +15,6 @@ import java.util.HashMap;
 public class UTrash extends JavaPlugin implements CommandExecutor {
 
     HashMap<String, ItemStack[]> tempTrash;
-    private ItemChecker itemChecker;
     private static UTrash plugin;
     public static UTrash instance(){
         return plugin;
@@ -25,12 +24,6 @@ public class UTrash extends JavaPlugin implements CommandExecutor {
         plugin = this;
         this.tempTrash = new HashMap<>();
         getCommand("trash").setExecutor(this);
-
-        if (getServer().getPluginManager().getPlugin("BetonQuest") != null){
-            itemChecker = new BetonQuestItemChecker();
-        } else {
-            itemChecker = new DefaultItemChecker();
-        }
 
         initConfig();
         getLogger().info(toColor("UltimateTrash Enabled!"));
@@ -128,9 +121,5 @@ public class UTrash extends JavaPlugin implements CommandExecutor {
 
     public String toColorTag(String msg){
         return ChatColor.translateAlternateColorCodes('&', getConfig().getString("strings.tag")+msg);
-    }
-
-    public ItemChecker getItemChecker() {
-        return itemChecker;
     }
 }
